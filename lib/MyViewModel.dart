@@ -16,6 +16,7 @@ class MyViewModel extends GetxController {
       result.clear();
       result
           .addAll(parsed.map<Result>((json) => Result.fromJson(json)).toList());
+      update();
     }).onError((error, stackTrace) {
       print(stackTrace);
     });

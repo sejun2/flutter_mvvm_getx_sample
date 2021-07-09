@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/MyViewModel.dart';
+import 'package:flutter_application_2/Result.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -54,25 +55,36 @@ class _MyHomePageState extends State {
     super.initState();
   }
 
+  Card getCardItem(Result content) {
+    return Card(
+      child: Text(content.body.toString()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('JSON SAMPLE')),
-      body: ListView(children: [
-        Column(
-          children: [
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  _onBtnClicked();
-                },
-                child: Text('TEST'),
-              ),
+      body: Column(
+        children: [
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                _onBtnClicked();
+              },
+              child: Text('TEST'),
             ),
-            Obx(() => Text('${myViewModel.result.toString()}'))
-          ],
-        ),
-      ]),
+          ),
+          Expanded(
+            child: GridView.count(
+                crossAxisCount: 2,
+                children: Get.find<MyViewModel>()
+                    .result
+                    .map((element) => getCardItem(element))
+                    .toList()),
+          )
+        ],
+      ),
     );
   }
 }
